@@ -1,29 +1,40 @@
+dist: xenial
 sudo: required
-dist: trusty
-
-os: linux
 
 language: c
 
-compiler:
-  - gcc
-  - clang
+matrix:
+  fast_finish: true
 
 addons:
   apt:
     packages:
-    - luarocks
-    - jq
+      - perl
+      - cmake
+      - check
+      - lua-check
+      - automake
+      - autoconf
+      - cpanminus
+      - pkg-config
+      - build-essential
+      - libncurses5-dev
+      - libpcre3
+      - libpcre3-dev
+      - libreadline-dev
+      - libssl-dev
+      - libjemalloc-dev
+      - libjemalloc1
+      - libtool
 
-
-env:
-  matrix:
-    - NGINX_VERSION=1.9.15
-    - NGINX_VERSION=1.11.2
+services:
+  - mysql
 
 before_install:
-  - jq . conf/orange.conf.example >> /dev/null  || exit 1
-  - sudo luarocks install luacheck
-  - luacheck -q .
-  - '! grep -n -P ''(?<=.{80}).+'' --color `find . -name ''*.lua''` || (echo "ERROR: Found Lua source lines exceeding 80 columns." > /dev/stderr; exit 1)'
-  - '! grep -n -P ''\t+'' --color `find . -name ''*.lua''` || (echo "ERROR: Cannot use tabs." > /dev/stderr; exit 1)'
+  - $PWD/.travis/linux_runner.sh before_install
+
+install:
+  - $PWD/.travis/linux_runner.sh do_install
+
+script:
+  - $PWD/.travis/linux_runner.sh run_tests

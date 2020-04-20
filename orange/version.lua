@@ -1,2 +1,2 @@
-local version = "0.7.0"
+local version = "0.8.1"
 return version

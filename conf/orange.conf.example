@@ -3,7 +3,6 @@
         "stat",
         "headers",
         "monitor",
-        "dynamic_upstream",
         "redirect",
         "rewrite",
         "rate_limiting",
@@ -14,9 +13,7 @@
         "hmac_auth",
         "signature_auth",
         "waf",
-        "divide",
-        "kvstore",
-        "balancer"
+        "divide"
     ],
     "store": "mysql",
     "store_mysql": {
@@ -45,7 +42,7 @@
         ]
     },
     "api": {
-        "auth_enable": true,
+        "auth_enable": false,
         "credentials": [
             {
                 "username":"api_username",
